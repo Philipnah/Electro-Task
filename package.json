@@ -18,5 +18,8 @@
   "homepage": "https://github.com/Philipnah/Electronnotes#readme",
   "devDependencies": {
     "electron": "^7.0.0"
+  },
+  "dependencies": {
+    "fs-jetpack": "^2.2.3"
   }
 }

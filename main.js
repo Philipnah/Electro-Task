@@ -3,6 +3,7 @@ const url = require("url");
 const path = require("path");
 
 
+
 const {app, BrowserWindow} = electron;
 
 let mainWindow
@@ -10,7 +11,8 @@ let mainWindow
 
 app.on("ready", function(){
      mainWindow = new BrowserWindow({
-          autoHideMenuBar: true
+          autoHideMenuBar: true,
+          webPreferences: {nodeIntegration: true}
      });
 
      
