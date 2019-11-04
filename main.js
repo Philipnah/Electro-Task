@@ -4,7 +4,7 @@ const path = require("path");
 
 
 
-const {app, BrowserWindow} = electron;
+const {app, BrowserWindow, globalShortcut} = electron;
 
 let mainWindow
 
@@ -26,4 +26,11 @@ app.on("ready", function(){
           slashes: true
      }));
      
+});
+
+app.on('ready', () => {
+     globalShortcut.register('CommandOrControl+Q', () => {
+          console.log('CommandOrControl+Q is pressed')
+          
+     });
 });
