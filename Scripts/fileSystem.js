@@ -1,34 +1,46 @@
 const fs = require("fs");
+const electron = require("electron");
 
-//const shell = new ActiveXObject("WScript.Shell");
-//const pathToMyDocuments = shell.SpecialFolders('MyDocuments'); muligvis bare "Documents"
 
-var usedFolder = __dirname;
+const usedFolder = electron.remote.app.getPath("documents");
+
+console.log(usedFolder);
 
 var userNoteFolder = "/Notes/";
 var userNotePath = usedFolder + userNoteFolder;
 var currentfileName = "note1.txt";
 var userNoteTXT = userNotePath + currentfileName;
 
-// __dirname ends without a slash
+
 
 function newFile() {
      console.log("New note will be created!")
      var newNote = document.getElementById("input").value
      console.log(newNote);
      
-     
-     //fs.access(file, fs.constants.F_OK, (err) => {
-     //     console.log(`${file} ${err ? 'does not exist' : 'exists'}`);
-     //   });
-
-     var currentfileName = "message.txt";
+     var n = Math.trunc(Math.random() * 10000);
+     var currentfileName = "note" + n + ".txt";
 
      var userNoteTXT = userNotePath + currentfileName;
-     fs.writeFile(userNoteTXT, newNote, (err) => {
-          if (err) throw err;
-          console.log('The "data to write" was written to file!');
-        });
+     
+     fs.open(currentfileName, 'wx', (err) => {
+          if (err) {
+               if (err.code === 'EEXIST') {
+               console.error('myfile already exists');
+               console.error("using another name");
+
+               }
+               
+               throw err;
+          }
+        
+          fs.writeFile(userNoteTXT, newNote, (err) => {
+               if (err) throw err;
+               console.log('The "data to write" was written to file!');
+          });
+     });
+     
+     
 
 }
 
@@ -36,7 +48,16 @@ function newFile() {
 function readFile() {
      console.log(userNoteTXT);
      fs.readdir(userNotePath, (err, files) => {
-          if (err) throw err;
+          if (err) {
+               console.log("Folder doesn't exist, creating a new one");
+               fs.mkdir(userNotePath, {recursive: false}, (err) => {
+                    if (err) throw err;
+               });
+
+               readFile()
+
+          }
+
           files.forEach(file => {
           console.log(file);
           var currentfileName = file;
