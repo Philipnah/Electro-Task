@@ -11,7 +11,7 @@ var userNotePath = usedFolder + userNoteFolder;
 var currentfileName = "note1.txt";
 var userNoteTXT = userNotePath + currentfileName;
 
-
+let mainWindow = electron.remote.getCurrentWindow();
 
 function newFile() {
      console.log("New note will be created!")
@@ -86,6 +86,17 @@ function readFile() {
 
 function deleteFile() {
      
+     /*fs.unlink(path, (err) => {
+          if (err) {
+            console.error(err)
+            return
+          }
+        
+          //file removed
+        }) */
+     
+     console.log("File will be deleted. Reloading window.");
+     mainWindow.reload();
 }
 
 readFile()
