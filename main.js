@@ -25,12 +25,10 @@ app.on("ready", function(){
           protocol: "file:",
           slashes: true
      }));
-     
-});
 
-app.on('ready', () => {
      globalShortcut.register('CommandOrControl+Q', () => {
           console.log('CommandOrControl+Q is pressed')
           
      });
+     
 });

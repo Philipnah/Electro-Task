@@ -23,7 +23,7 @@ function newFile() {
 
      var userNoteTXT = userNotePath + currentfileName;
      
-     fs.open(currentfileName, 'wx', (err) => {
+     fs.open(userNoteTXT, 'wx', (err) => {
           if (err) {
                if (err.code === 'EEXIST') {
                console.error('myfile already exists');
@@ -37,6 +37,7 @@ function newFile() {
           fs.writeFile(userNoteTXT, newNote, (err) => {
                if (err) throw err;
                console.log('The "data to write" was written to file!');
+               mainWindow.reload();
           });
      });
      
@@ -78,7 +79,7 @@ function readFile() {
           });
      });
 
-     
+     console.log("readFile() has been run");
 
      
 }
