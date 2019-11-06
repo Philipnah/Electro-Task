@@ -73,7 +73,16 @@ function readFile() {
                var divnote = document.createElement("DIV");
                // perhaps find a way to give each div an id 
                divnote.innerHTML = content;
+               divnote.setAttribute("id", "noteContent");
                document.getElementById("notes").appendChild(divnote);
+
+               /*var deleteButton = document.createElement("button");
+               deleteButton.innerHTML = "Delete"
+               deleteButton.setAttribute("id", userNoteTXT);
+               deleteButton.setAttribute("class", "btn btn-sm btn-outline-secondary");
+               document.getElementById("noteContent").appendChild(deleteButton);*/
+               
+
           });
 
           });
@@ -92,7 +101,7 @@ function deleteFile() {
             return
           }
         
-          //file removed
+          console.log("file removed");
         }) */
      
      console.log("File will be deleted. Reloading window.");
