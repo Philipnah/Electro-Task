@@ -52,9 +52,11 @@ function readFile() {
           if (err) {
                console.log("Folder doesn't exist, creating a new one");
                fs.mkdir(userNotePath, {recursive: false}, (err) => {
-                    if (err) throw err;
+                    if (err) throw err;  
                });
-
+               
+               // create new date and insert into html and it should be remembered so even if you exit the app and come back it will still be there
+               // perhaps by making a txt file named: date.txt and with the date as the content.
                readFile()
 
           }
@@ -103,6 +105,8 @@ function deleteFile() {
         
           console.log("file removed");
         }) */
+     
+     // call the button "clear"
      
      console.log("File will be deleted. Reloading window.");
      mainWindow.reload();

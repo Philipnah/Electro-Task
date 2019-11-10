@@ -1,3 +1,24 @@
 .space {
      margin: 30px;
 }
+
+body {
+     color: white;
+     background-color: #232323;
+}
+
+.form-space-left {
+     margin-left: 15px;
+}
+
+.form-space-right {
+     margin-right: 15px;
+}
+
+.clear-btn {
+     margin: 25px 5px;
+}
+
+.notes {
+     margin: 0px 5px;
+}
