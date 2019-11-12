@@ -7,18 +7,25 @@ body {
      background-color: #232323;
 }
 
-.form-space-left {
-     margin-left: 15px;
+.form-control {
+     max-width: 450px;
+     margin-left: 30px;
 }
 
-.form-space-right {
-     margin-right: 15px;
+.input-group-append {
+     margin-right: 30px;
 }
 
 .clear-btn {
-     margin: 25px 5px;
+     margin: 25px 30px;
+}
+
+.date {
+     margin-bottom: 20px;
+     margin-left: 30px;
 }
 
 .notes {
-     margin: 0px 5px;
+     margin: 0px 30px;
+     font-size: 17px;
 }

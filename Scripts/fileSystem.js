@@ -1,15 +1,16 @@
 const fs = require("fs");
 const electron = require("electron");
-
+const rimraf = require("rimraf");
 
 const usedFolder = electron.remote.app.getPath("documents");
 
 console.log(usedFolder);
 
-var userNoteFolder = "/Notes/";
-var userNotePath = usedFolder + userNoteFolder;
+const userNoteFolder = "/Notes/";
+const userNotePath = usedFolder + userNoteFolder;
 var currentfileName = "note1.txt";
 var userNoteTXT = userNotePath + currentfileName;
+const dateTXT = userNotePath + "date.txt"
 
 let mainWindow = electron.remote.getCurrentWindow();
 
@@ -28,19 +29,17 @@ function newFile() {
                if (err.code === 'EEXIST') {
                console.error('myfile already exists');
                console.error("using another name");
-
                }
-               
                throw err;
           }
         
           fs.writeFile(userNoteTXT, newNote, (err) => {
                if (err) throw err;
                console.log('The "data to write" was written to file!');
+               
                mainWindow.reload();
           });
      });
-     
      
 
 }
@@ -55,8 +54,18 @@ function readFile() {
                     if (err) throw err;  
                });
                
-               // create new date and insert into html and it should be remembered so even if you exit the app and come back it will still be there
-               // perhaps by making a txt file named: date.txt and with the date as the content.
+               // I'm slicing the date here so in the year 10000 this won't really work
+               var newDate = Date().slice(0, 15);
+               console.log(newDate);
+
+               fs.writeFile(dateTXT, newDate, (err) => {
+                    if (err) throw err;
+                    
+                    console.log('The date has been written to its file!');
+
+                    mainWindow.reload();
+               });
+               
                readFile()
 
           }
@@ -69,46 +78,39 @@ function readFile() {
 
           fs.readFile(userNoteTXT, "utf8", (err, data) => {
                if (err) throw err;
-               console.log(data);
-               var content = data;
+               if (userNoteTXT != dateTXT) {
+                    console.log(data);
+                    var content = data;
 
-               var divnote = document.createElement("DIV");
-               // perhaps find a way to give each div an id 
-               divnote.innerHTML = content;
-               divnote.setAttribute("id", "noteContent");
-               document.getElementById("notes").appendChild(divnote);
+                    var divnote = document.createElement("DIV");
+                    
+                    divnote.innerHTML = content;
+                    divnote.setAttribute("id", "noteContent");
+                    document.getElementById("notes").appendChild(divnote);
 
-               /*var deleteButton = document.createElement("button");
-               deleteButton.innerHTML = "Delete"
-               deleteButton.setAttribute("id", userNoteTXT);
-               deleteButton.setAttribute("class", "btn btn-sm btn-outline-secondary");
-               document.getElementById("noteContent").appendChild(deleteButton);*/
+               } else {
+                    console.log(data);
+                    var content = data;
+                    
+                    document.getElementById("date").innerHTML = content;
+                    console.log("inserted date.txt");
+               }
                
 
-          });
+               });
+          
 
           });
      });
-
      console.log("readFile() has been run");
-
-     
 }
 
-function deleteFile() {
+function deleteFolder() {
+     rimraf.sync(userNotePath);
+
+     console.log("Reloading window.");
      
-     /*fs.unlink(path, (err) => {
-          if (err) {
-            console.error(err)
-            return
-          }
-        
-          console.log("file removed");
-        }) */
-     
-     // call the button "clear"
-     
-     console.log("File will be deleted. Reloading window.");
+     readFile()
      mainWindow.reload();
 }
 
